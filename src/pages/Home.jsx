@@ -206,7 +206,11 @@ export const Home = () => {
           </button>
         </form>
 
-        <button className="buttonDownload w-3/4 mx-auto" onClick={savePassword}>
+        <button className="buttonDownload w-3/4 mx-auto" onClick={
+                password
+                  ? savePassword
+                  : () => toast.error("Generate a password", { duration: 1000 })
+              }>
           Save Password
         </button>
         <Link to="/passwords">

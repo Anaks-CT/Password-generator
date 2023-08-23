@@ -46,15 +46,26 @@ export const Table = ({ className, data, pending, fetchPasswords }) => {
 
   // delete saved password function
   const deleteHandler = (name) => {
+    // fetching the existing data
     const existingPasswords = JSON.parse(localStorage.getItem("passwords"));
+
+    // removing the data selected by the user
     const updatedPasswords = existingPasswords.filter(
-        (password) => password.name !== name
-        );
-        localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
-        fetchPasswords()
-        toast.dismiss();
-        return toast.success(`Password deleted`);
-    };
+      (password) => password.name !== name
+    );
+
+    // setting the newly created data to localstorage
+    localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
+
+    // calling the function again to fetch the newly updated data
+    fetchPasswords();
+
+    // closing the toast
+    toast.dismiss();
+
+    // toasting success to the user if deleted
+    return toast.success(`Password deleted`);
+  };
 
   // columns inside the table wrapped in usememo to understand which row was clicked
   const columns = useMemo(
@@ -128,7 +139,7 @@ export const Table = ({ className, data, pending, fetchPasswords }) => {
           </>
         ),
       },
-    //   hiding the password in mobile view for nice UI
+      //   hiding the password in mobile view for nice UI
       {
         name: "Password",
         grow: 2,
