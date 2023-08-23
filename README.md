@@ -17,6 +17,5 @@ A React application that enables users to effortlessly create custom passwords w
 - react-data-table-component library for table
 - react-hot-toast library for toast
 - Tailwind CSS for styling
-- TailwindCSS
 - uiverse.io CSS solutions
 - Deployed on Netlify app
