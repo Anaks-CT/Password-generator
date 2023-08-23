@@ -6,20 +6,90 @@ import { Link } from "react-router-dom";
 import { passwordGenerator } from "../utils/generatePassword";
 
 export const Home = () => {
+  // state for options clicked by the user
   const [options, setOptions] = useState({
     length: 8,
     lowercase: true,
-    uppercase: true,    
+    uppercase: true,
     numbers: true,
     symbols: true,
   });
+
+  // state for the password
   const [password, setPassword] = useState("");
 
+  // function to generate the password and store
   const submitHandler = (event) => {
     event.preventDefault();
     return setPassword(passwordGenerator(options));
   };
 
+  // opening a toast while saving the password to store the name to the password
+  const savePassword = () =>
+    toast(
+      (t) => (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (!e.target.passwordName.value) {
+              return false;
+            }
+            toast.dismiss(t.id);
+            return submitNewSaveHandler(e);
+          }}
+          className="flex flex-col items-center"
+        >
+          <span className="font-bold mb-4">Save Password</span>
+          <span className="flex flex-col gap-2">
+            <input
+              type="text"
+              value={password}
+              name="password"
+              id="password"
+              disabled
+              className="text-sm border rounded-md p-2"
+            />
+            <input
+              type="text"
+              placeholder="Name"
+              name="passwordName"
+              id="passwordName"
+              className="text-sm border rounded-md p-2"
+            />
+          </span>
+          <div className="flex gap-2 mt-2">
+            <button
+              className="border rounded-md text-white bg-green-400 p-2"
+              type="submit"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className="border rounded-md text-white bg-red-400 p-2"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      ),
+      {
+        position: "top-center",
+      }
+    );
+
+  // function to save the password to the localstorage when clicked save in the modal form
+  const submitNewSaveHandler = (e) => {
+    const passwordName = e.target.passwordName.value.toLowerCase().trim();
+    const passwordObject = {
+      name: passwordName,
+      password,
+    };
+    const existingPasswords = JSON.parse(localStorage.getItem("passwords")) || [];
+    existingPasswords.push(passwordObject);
+    localStorage.setItem("passwords", JSON.stringify(existingPasswords));
+  };
 
   return (
     <div className="card w-full p-3 lg:w-auto lg:p-0">
@@ -136,28 +206,25 @@ export const Home = () => {
           </button>
         </form>
 
-            <button
-              className="buttonDownload w-3/4 mx-auto"
-              
-            >
-              Save Password
-            </button>
-            <Link to="/passwords">
-              <button className="continue-application w-3/4">
-                <div>
-                  <div className="pencil"></div>
-                  <div className="folder">
-                    <div className="top">
-                      <svg viewBox="0 0 24 27">
-                        <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
-                      </svg>
-                    </div>
-                    <div className="paper"></div>
-                  </div>
+        <button className="buttonDownload w-3/4 mx-auto" onClick={savePassword}>
+          Save Password
+        </button>
+        <Link to="/passwords">
+          <button className="continue-application w-3/4">
+            <div>
+              <div className="pencil"></div>
+              <div className="folder">
+                <div className="top">
+                  <svg viewBox="0 0 24 27">
+                    <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                  </svg>
                 </div>
-                Saved Passwords
-              </button>
-            </Link>
+                <div className="paper"></div>
+              </div>
+            </div>
+            Saved Passwords
+          </button>
+        </Link>
       </div>
     </div>
   );
