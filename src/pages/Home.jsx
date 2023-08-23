@@ -3,6 +3,7 @@ import { copyToClipboardIMG } from "../assets";
 import { toast } from "react-hot-toast";
 import { CheckWrapper } from "../components/CheckWrapper";
 import { Link } from "react-router-dom";
+import { GoogleSVG } from "../components/UI/GoogleSVG";
 
 export const Home = () => {
   const [options, setOptions] = useState({
@@ -157,6 +158,7 @@ export const Home = () => {
           </>
         ) : (
           <button className="btn-google">
+            <GoogleSVG />
             Continue with Google
           </button>
         )}
