@@ -86,9 +86,18 @@ export const Home = () => {
       name: passwordName,
       password,
     };
-    const existingPasswords = JSON.parse(localStorage.getItem("passwords")) || [];
-    existingPasswords.push(passwordObject);
-    localStorage.setItem("passwords", JSON.stringify(existingPasswords));
+    // trying to fetch existing data if present in the localstorage if not initializing with empty array
+    const existingPasswords =
+      JSON.parse(localStorage.getItem("passwords")) || [];
+
+    // Add the new password object to the beginning of the array
+    existingPasswords.unshift(passwordObject);
+
+    // Keep only the first 5 passwords (if there are more)
+    const limitedPasswords = existingPasswords.slice(0, 5);
+
+    // setting the fresh data  to the localstorage
+    localStorage.setItem("passwords", JSON.stringify(limitedPasswords));
   };
 
   return (
@@ -206,11 +215,15 @@ export const Home = () => {
           </button>
         </form>
 
-        <button className="buttonDownload w-3/4 mx-auto" onClick={
-                password
-                  ? savePassword
-                  : () => toast.error("Generate a password", { duration: 1000 })
-              }>
+        <button
+          className="buttonDownload w-3/4 mx-auto"
+          onClick={
+            // throwing error toast when trying to save empty password
+            password
+              ? savePassword
+              : () => toast.error("Generate a password", { duration: 1000 })
+          }
+        >
           Save Password
         </button>
         <Link to="/passwords">
