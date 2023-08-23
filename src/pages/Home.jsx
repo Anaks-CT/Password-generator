@@ -142,7 +142,7 @@ export const Home = () => {
             >
               Save Password
             </button>
-            <Link to="/savedPasswords">
+            <Link to="/passwords">
               <button className="continue-application w-3/4">
                 <div>
                   <div className="pencil"></div>
