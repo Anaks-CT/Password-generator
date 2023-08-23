@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { CheckWrapper } from "../components/CheckWrapper";
 import { Link } from "react-router-dom";
 import { GoogleSVG } from "../components/UI/GoogleSVG";
+import { generatePassword, passwordGenerator } from "../utils/generatePassword";
 
 export const Home = () => {
   const [options, setOptions] = useState({
@@ -16,7 +17,12 @@ export const Home = () => {
   const [password, setPassword] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
-  const submitHandler = () => {};
+  const submitHandler = (event) => {
+    event.preventDefault();
+    return setPassword(passwordGenerator(options));
+  };
+
+
   return (
     <div className="card w-full p-3 lg:w-auto lg:p-0">
       <div className="card-inner flex flex-col justify-center">
@@ -62,7 +68,7 @@ export const Home = () => {
             <input
               id="pass-length"
               type="range"
-              min="1"
+              min="4"
               max="30"
               step="1"
               name="length"
