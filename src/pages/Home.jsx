@@ -3,8 +3,7 @@ import { copyToClipboardIMG } from "../assets";
 import { toast } from "react-hot-toast";
 import { CheckWrapper } from "../components/CheckWrapper";
 import { Link } from "react-router-dom";
-import { GoogleSVG } from "../components/UI/GoogleSVG";
-import { generatePassword, passwordGenerator } from "../utils/generatePassword";
+import { passwordGenerator } from "../utils/generatePassword";
 
 export const Home = () => {
   const [options, setOptions] = useState({
@@ -15,7 +14,6 @@ export const Home = () => {
     symbols: true,
   });
   const [password, setPassword] = useState("");
-  const [userEmail, setUserEmail] = useState("");
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -137,8 +135,7 @@ export const Home = () => {
             <span>Generate</span>
           </button>
         </form>
-        {userEmail ? (
-          <>
+
             <button
               className="buttonDownload w-3/4 mx-auto"
               
@@ -161,13 +158,6 @@ export const Home = () => {
                 Saved Passwords
               </button>
             </Link>
-          </>
-        ) : (
-          <button className="btn-google">
-            <GoogleSVG />
-            Continue with Google
-          </button>
-        )}
       </div>
     </div>
   );
