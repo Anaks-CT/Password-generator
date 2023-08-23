@@ -98,6 +98,12 @@ export const Home = () => {
 
     // setting the fresh data  to the localstorage
     localStorage.setItem("passwords", JSON.stringify(limitedPasswords));
+
+    // closing the toast
+    toast.dismiss();
+
+    // toasting success to the user if deleted
+    return toast.success(`Password saved`);
   };
 
   return (
