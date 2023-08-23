@@ -45,7 +45,16 @@ export const Table = ({ className, data, pending, fetchPasswords }) => {
   };
 
   // delete saved password function
-  const deleteHandler = (id) => {console.log(id)};
+  const deleteHandler = (name) => {
+    const existingPasswords = JSON.parse(localStorage.getItem("passwords"));
+    const updatedPasswords = existingPasswords.filter(
+        (password) => password.name !== name
+        );
+        localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
+        fetchPasswords()
+        toast.dismiss();
+        return toast.success(`Password deleted`);
+    };
 
   // columns inside the table wrapped in usememo to understand which row was clicked
   const columns = useMemo(
@@ -89,7 +98,7 @@ export const Table = ({ className, data, pending, fetchPasswords }) => {
                         <button
                           className="border rounded-md text-white bg-green-400 p-2"
                           type="submit"
-                          onClick={() => deleteHandler(row.id)}
+                          onClick={() => deleteHandler(row.name)}
                         >
                           Confirm
                         </button>
