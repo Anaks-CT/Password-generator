@@ -5,7 +5,7 @@ import PlusSVG from "../components/UI/PlusSVG";
 
 export const SavedPasswords = () => {
   // state to save the passwords fetched from local storage
-  const [savedPasswords, setSavedPasswords] = useState([]);
+  const [savedPasswords, setSavedPasswords] = useState([]);  
 
   // state to determine loading state
   const [loading, setLoading] = useState(false);
